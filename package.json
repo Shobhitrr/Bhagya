@@ -1,0 +1,9 @@
+{
+  "name": "sowbhagya-portfolio",
+  "version": "1.0.0",
+  "description": "Professional Portfolio - Sowbhagya Acharya, Copywriter",
+  "scripts": {
+    "dev": "npx serve public",
+    "build": "echo 'Static site - no build needed'"
+  }
+}

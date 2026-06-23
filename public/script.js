@@ -41,19 +41,20 @@ document.addEventListener('click', (e) => {
 // ===== SCROLL ANIMATIONS =====
 const observerOptions = {
     root: null,
-    rootMargin: '0px 0px -80px 0px',
+    rootMargin: '0px 0px -60px 0px',
     threshold: 0.1
 };
 
 const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
+    entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            // Add stagger delay based on element position among siblings
-            const siblings = entry.target.parentElement.querySelectorAll('.animate-in');
+            // Stagger animation based on sibling index
+            const parent = entry.target.parentElement;
+            const siblings = parent.querySelectorAll('.animate-in');
             let delay = 0;
             siblings.forEach((sibling, i) => {
                 if (sibling === entry.target) {
-                    delay = i * 100;
+                    delay = i * 80;
                 }
             });
 
@@ -66,7 +67,6 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe all animate-in elements
 document.querySelectorAll('.animate-in').forEach(el => {
     observer.observe(el);
 });
@@ -79,7 +79,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (target) {
             const navHeight = navbar.offsetHeight;
             const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
@@ -112,32 +111,11 @@ function highlightNavLink() {
 
 window.addEventListener('scroll', highlightNavLink);
 
-// ===== TYPING EFFECT FOR HERO (subtle) =====
-const heroGreeting = document.querySelector('.hero-greeting');
-if (heroGreeting) {
-    heroGreeting.style.opacity = '0';
-    setTimeout(() => {
-        heroGreeting.style.opacity = '1';
-        heroGreeting.style.transition = 'opacity 0.6s ease';
-    }, 300);
-}
-
-// ===== PARALLAX EFFECT ON HERO SHAPES =====
-const heroShapes = document.querySelectorAll('.hero-shape, .hero-shape-2');
-
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    heroShapes.forEach((shape, i) => {
-        const speed = (i + 1) * 0.3;
-        shape.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-});
-
-// ===== PAGE LOAD ANIMATION =====
+// ===== HERO ENTRANCE ANIMATION =====
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 
-    // Trigger hero animations with stagger
+    // Animate hero elements with stagger
     const heroElements = document.querySelectorAll('.hero .animate-in');
     heroElements.forEach((el, i) => {
         setTimeout(() => {
